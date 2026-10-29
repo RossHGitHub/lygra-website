@@ -98,22 +98,30 @@
 
     <section class="beta-section wrap" id="beta" aria-labelledby="beta-title">
       <div class="beta-copy"><p class="eyebrow">Open beta</p><h2 id="beta-title">Be part of what’s next.</h2><p>Join the waiting list. We’ll be in touch when<br> we’re ready to welcome you to Lygra.</p></div>
-    <form class="beta-form" action="https://formsubmit.co/support@lygra.co.uk" method="POST" aria-labelledby="form-title">
+    <form class="beta-form" action="https://turfmetric.uk/api/beta-signups" method="POST" aria-labelledby="form-title">
       <h3 id="form-title" class="sr-only">Sign up for the open beta</h3>
-      <input type="hidden" name="_subject" value="New Beta Signup!">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_autoresponse" value="Thanks for signing up to the Lygra beta!&#10;&#10;You're on the waiting list. We're bringing turf insight, work planning and your team together, and we're glad you'd like to be part of it.&#10;&#10;We'll be in touch by email when we're ready to invite you, with everything you need to get started. There's nothing else you need to do for now.&#10;&#10;If you have any questions, contact support@lygra.co.uk.&#10;&#10;The Lygra team&#10;Intelligence from the ground up.">
-      <input type="hidden" name="source" value="Lygra website — open beta waiting list">
-      <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+      <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
       <div class="form-row"><label>Your name<input name="name" type="text" autocomplete="name" required maxlength="100" placeholder="Alex Morgan"></label><label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="alex@yourclub.co.uk"></label></div>
       <label>Club, course or organisation<input name="organisation" type="text" autocomplete="organization" required maxlength="160" placeholder="Where you work"></label>
       <div class="form-row"><label>Your role<select name="role" required><option value="">Select your role</option><option>Course manager</option><option>Head greenkeeper</option><option>Deputy or assistant greenkeeper</option><option>Grounds manager / groundskeeper</option><option>Club management</option><option>Other</option></select></label><label>Your main surface<select name="surface" required><option>Golf</option><option>Football</option><option>Tennis</option><option>Multiple sports</option><option>Other</option></select></label></div>
       <label>What would make your day easier? <span class="optional">Optional</span><textarea name="message" rows="3" maxlength="2000" placeholder="Tell us what matters to you."></textarea></label>
       <label class="consent"><input type="checkbox" name="beta_contact_consent" value="I agree to be contacted about the Lygra beta" required><span>I’m happy for Lygra to contact me about the beta.</span></label>
       <button class="button button-dark" type="submit">Join the waiting list</button>
-      <p class="form-note">Your details are sent via FormSubmit. <a href="./privacy.html">How we use your details</a>.</p>
+      <p class="form-note">We’ll use your details to organise beta invitations. <a href="./privacy.html">How we use your details</a>.</p>
       <p class="form-status" role="status" aria-live="polite"></p>
     </form>
+    <div class="signup-confirmation" hidden aria-labelledby="signup-confirmation-title">
+      <div class="signup-confirmation-brand"><img src="./assets/lygra-brand.jpeg" alt="Lygra — intelligence from the ground up" width="1600" height="900"></div>
+      <div class="signup-confirmation-content">
+        <p class="eyebrow">Lygra open beta</p>
+        <h3 id="signup-confirmation-title" tabindex="-1">You’re on the list.</h3>
+        <p>Thanks for signing up to the Lygra beta!</p>
+        <p>Your application is saved. We’re bringing turf insight, work planning and your team together, and we’re glad you’d like to be part of it.</p>
+        <div class="signup-confirmation-next"><h4>What happens next?</h4><p>We’ll be in touch by email when we’re ready to invite you, with everything you need to get started. There’s nothing else you need to do for now.</p></div>
+        <p>Questions? <a href="mailto:support@lygra.co.uk">support@lygra.co.uk</a></p>
+        <p class="signup-signoff">The Lygra team<br><span>Intelligence from the ground up.</span></p>
+      </div>
+    </div>
     </section>
 
     <section class="questions wrap" aria-labelledby="questions-title">

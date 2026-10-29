@@ -50,32 +50,53 @@ if (tablist) {
 
 const form = document.querySelector('.beta-form');
 if (form) {
-  // Native POST keeps the provider's anti-spam challenge and receipt intact.
-  // Never display success here: only the receiving service can confirm receipt.
   let submitting = false;
   const submit = form.querySelector('button[type="submit"]');
   const status = form.querySelector('.form-status');
-  let resetTimer;
-  function resetSubmission() {
-    clearTimeout(resetTimer);
-    submitting = false;
-    submit.disabled = false;
-    form.removeAttribute('aria-busy');
-    status.textContent = '';
-  }
-  form.addEventListener('submit', event => {
-    if (submitting) { event.preventDefault(); return; }
-    if (!form.reportValidity()) { event.preventDefault(); return; }
+  const confirmation = document.querySelector('.signup-confirmation');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (submitting || !form.reportValidity()) return;
     submitting = true;
     submit.disabled = true;
     form.setAttribute('aria-busy', 'true');
-    status.textContent = 'Opening the submission page…';
-    resetTimer = setTimeout(() => {
-      resetSubmission();
-      status.textContent = 'If the next page didn’t open, check your connection and try again.';
-    }, 15000);
+    status.textContent = 'Saving your application…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        credentials: 'omit',
+        signal: controller.signal,
+      });
+      const result = await response.json();
+      if (!response.ok || result.success !== true) {
+        throw new Error(response.status === 429
+          ? 'Too many signup attempts. Please try later or email support@lygra.co.uk.'
+          : response.status === 400
+            ? 'Please check your details and consent, then try again.'
+            : 'We couldn’t save your application. Please try again or email support@lygra.co.uk.');
+      }
+      form.reset();
+      form.hidden = true;
+      confirmation.hidden = false;
+      confirmation.querySelector('h3').focus({ preventScroll: true });
+      confirmation.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    } catch (error) {
+      status.textContent = error.name === 'AbortError'
+        ? 'We couldn’t confirm your signup yet. Your details are still here—please try again. Retrying won’t create a duplicate.'
+        : error instanceof TypeError || error instanceof SyntaxError
+          ? 'We couldn’t connect. Your details are still here—please try again or email support@lygra.co.uk.'
+          : error.message;
+    } finally {
+      clearTimeout(timeout);
+      submitting = false;
+      submit.disabled = false;
+      form.removeAttribute('aria-busy');
+    }
   });
-  window.addEventListener('pageshow', resetSubmission);
 }
 
 document.querySelectorAll('[data-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });
